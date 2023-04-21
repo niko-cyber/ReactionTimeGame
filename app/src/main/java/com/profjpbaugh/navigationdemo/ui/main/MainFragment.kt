@@ -2,17 +2,28 @@ package com.profjpbaugh.navigationdemo.ui.main
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.Navigation
+import com.profjpbaugh.navigationdemo.MainActivity
 import com.profjpbaugh.navigationdemo.R
+import com.profjpbaugh.navigationdemo.ScoreFragment
 import com.profjpbaugh.navigationdemo.databinding.FragmentMainBinding
 import kotlin.random.Random
 
 class MainFragment : Fragment() {
+
+    var time = 0.0
+    var initialTime = 0.0
+    var starts = ArrayList<Double>()
+    var ends = ArrayList<Double>()
+    var totals = ArrayList<Double>()
+    var phase = 1
+
 
     companion object {
         fun newInstance() = MainFragment()
@@ -34,15 +45,7 @@ class MainFragment : Fragment() {
 
 
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        binding.nextBtn.setOnClickListener {
 
-            val action : MainFragmentDirections.MainToSecond = MainFragmentDirections.mainToSecond()
-
-
-            //action.to(MainFragmentDirections.mainToSecond())
-
-            Navigation.findNavController(it).navigate(action)
-        }
         val motionLayout = binding.motionLayout
         // get constraintSets for start and end states
         val constraintSetStart = motionLayout.getConstraintSet(R.id.start)
@@ -55,6 +58,62 @@ class MainFragment : Fragment() {
         motionLayout.setTransitionListener(object : MotionLayout.TransitionListener {
             override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
                 // called when the transition starts
+                Log.i("MainFragment", phase.toString())
+                time = System.currentTimeMillis().toDouble() / 1000.0
+                when (phase) {
+                    1 -> {
+                        initialTime = time
+                        starts.add(0.0)
+                    }
+                    2 -> {
+                        time -= initialTime
+                        ends.add(time)
+                    }
+                    3 -> {
+                        starts.add(ends[0])
+                    }
+                    4 -> {
+                        time -= initialTime
+                        ends.add(time)
+                    }
+                    5 -> {
+                        starts.add(ends[1])
+                    }
+                    6 -> {
+                        time -= initialTime
+                        ends.add(time)
+                    }
+                    7 -> {
+                        starts.add(ends[2])
+                    }
+                    8 -> {
+                        time -= initialTime
+                        ends.add(time)
+                    }
+                    9 -> {
+                        starts.add(ends[3])
+                    }
+                    10 -> {
+                        time -= initialTime
+                        ends.add(time)
+                        phase = 1
+
+                        for (i in 0 until starts.size) {
+                            totals.add(ends[i] - starts[i]) //add the split for each
+                        }
+                        updateData(starts, ends, totals)
+                        val action : MainFragmentDirections.MainToSecond = MainFragmentDirections.mainToSecond()
+
+                        //action.to(MainFragmentDirections.mainToSecond())
+
+                        Navigation.findNavController(binding.motionLayout).navigate(action)
+
+                    }
+                }
+
+                if (phase != 10) {
+                    phase++
+                }
             }
             override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
                 // called when the transition is in progress
@@ -77,9 +136,21 @@ class MainFragment : Fragment() {
             }
             override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {
                 // called when a transition trigger is activated
+
             }
         })
 
+
         return binding.root
-    }//end onCreateView
+    }//end
+
+
+    fun updateData(startTimes : ArrayList<Double>,
+                   endTimes : ArrayList<Double>, totalTimes : ArrayList<Double>) {
+        val supportFragmentManager = (activity as MainActivity).supportFragmentManager
+        val scoreFragment = supportFragmentManager.findFragmentById(R.id.scoreFragment) as ScoreFragment
+        scoreFragment.changeData(startTimes, endTimes, totalTimes)
+    }
+
+
 }

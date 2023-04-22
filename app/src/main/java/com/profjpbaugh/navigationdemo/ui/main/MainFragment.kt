@@ -9,19 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.Navigation
-import com.profjpbaugh.navigationdemo.MainActivity
 import com.profjpbaugh.navigationdemo.R
-import com.profjpbaugh.navigationdemo.ScoreFragment
 import com.profjpbaugh.navigationdemo.databinding.FragmentMainBinding
 import kotlin.random.Random
 
 class MainFragment : Fragment() {
 
-    var time = 0.0
-    var initialTime = 0.0
-    var starts = ArrayList<Double>()
-    var ends = ArrayList<Double>()
-    var totals = ArrayList<Double>()
+    var time = 0L
+    var initialTime = 0L
+    var starts = ArrayList<Float>()
+    var ends = ArrayList<Float>()
+    var totals = ArrayList<Float>()
     var phase = 1
 
 
@@ -59,50 +57,53 @@ class MainFragment : Fragment() {
             override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
                 // called when the transition starts
                 Log.i("MainFragment", phase.toString())
-                time = System.currentTimeMillis().toDouble() / 1000.0
+                time = System.currentTimeMillis()
                 when (phase) {
                     1 -> {
                         initialTime = time
-                        starts.add(0.0)
+                        starts.add(0.0F)
                     }
                     2 -> {
                         time -= initialTime
-                        ends.add(time)
+                        ends.add(time.toFloat() / 1000F)
                     }
                     3 -> {
                         starts.add(ends[0])
                     }
                     4 -> {
                         time -= initialTime
-                        ends.add(time)
+                        ends.add(time.toFloat() / 1000F)
                     }
                     5 -> {
                         starts.add(ends[1])
                     }
                     6 -> {
                         time -= initialTime
-                        ends.add(time)
+                        ends.add(time.toFloat() / 1000F)
                     }
                     7 -> {
                         starts.add(ends[2])
                     }
                     8 -> {
                         time -= initialTime
-                        ends.add(time)
+                        ends.add(time.toFloat() / 1000F)
                     }
                     9 -> {
                         starts.add(ends[3])
                     }
                     10 -> {
                         time -= initialTime
-                        ends.add(time)
+                        ends.add(time.toFloat() / 1000F)
                         phase = 1
 
                         for (i in 0 until starts.size) {
                             totals.add(ends[i] - starts[i]) //add the split for each
                         }
-                        updateData(starts, ends, totals)
-                        val action : MainFragmentDirections.MainToSecond = MainFragmentDirections.mainToSecond()
+                        logData(starts, ends, totals)
+                        //updateData(starts, ends, totals)
+                        val action : MainFragmentDirections.MainToSecond =
+                            MainFragmentDirections.mainToSecond(
+                                starts.toFloatArray(), ends.toFloatArray(), totals.toFloatArray())
 
                         //action.to(MainFragmentDirections.mainToSecond())
 
@@ -110,6 +111,7 @@ class MainFragment : Fragment() {
 
                     }
                 }
+
 
                 if (phase != 10) {
                     phase++
@@ -145,12 +147,14 @@ class MainFragment : Fragment() {
     }//end
 
 
-    fun updateData(startTimes : ArrayList<Double>,
-                   endTimes : ArrayList<Double>, totalTimes : ArrayList<Double>) {
-        val supportFragmentManager = (activity as MainActivity).supportFragmentManager
-        val scoreFragment = supportFragmentManager.findFragmentById(R.id.scoreFragment) as ScoreFragment
-        scoreFragment.changeData(startTimes, endTimes, totalTimes)
+    fun logData(startTimes : ArrayList<Float>,
+                   endTimes : ArrayList<Float>, totalTimes : ArrayList<Float>) {
+        Log.i("MainFragment", startTimes.toString())
+        Log.i("MainFragment", endTimes.toString())
+        Log.i("MainFragment", totalTimes.toString())
+
     }
+
 
 
 }

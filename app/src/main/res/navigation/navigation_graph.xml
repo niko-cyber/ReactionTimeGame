@@ -26,5 +26,14 @@
         <action
             android:id="@+id/secondToMain"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="startTimes"
+            app:argType="float[]" />
+        <argument
+            android:name="endTimes"
+            app:argType="float[]" />
+        <argument
+            android:name="totalTimes"
+            app:argType="float[]" />
     </fragment>
 </navigation>

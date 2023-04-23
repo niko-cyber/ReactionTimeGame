@@ -6,7 +6,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="3000">
+        motion:duration="250">
         <KeyFrameSet>
             <KeyAttribute
                 motion:motionTarget="@+id/animationButton"
@@ -31,8 +31,8 @@
         </KeyFrameSet>
         <OnClick motion:targetId="@id/animationButton"
             motion:clickAction="toggle" />
-        <OnSwipe motion:maxVelocity="3.66"
-            motion:maxAcceleration="1.1" />
+        <OnSwipe motion:maxVelocity="3.57"
+            motion:maxAcceleration="0.1" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">

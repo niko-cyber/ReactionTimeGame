@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import com.profjpbaugh.navigationdemo.databinding.ActivityMainBinding
 import com.profjpbaugh.navigationdemo.ui.main.MainFragment
 
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity(), SecondFragment.OnFragmentInteractionLi
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }

@@ -81,27 +81,27 @@ class SecondFragment : Fragment() {
         for (t in totalTimes) {
             totalScore += t
         }
-        binding.totalScore.text = "Total: " + totalScore.toString() + "s"
+        binding.totalScore.text = "Total: " + String.format("%.2f", totalScore) + "s"
 
-        binding.row1Start.text = startTimes[0].toString()
-        binding.row1End.text = endTimes[0].toString()
-        binding.row1Tot.text = totalTimes[0].toString()
+        binding.row1Start.text = String.format("%.2f", startTimes[0])
+        binding.row1End.text = String.format("%.2f", endTimes[0])
+        binding.row1Tot.text = String.format("%.2f", totalTimes[0])
 
-        binding.row2Start.text = startTimes[1].toString()
-        binding.row2End.text = endTimes[1].toString()
-        binding.row2Tot.text = totalTimes[1].toString()
+        binding.row2Start.text = String.format("%.2f", startTimes[1])
+        binding.row2End.text = String.format("%.2f", endTimes[1])
+        binding.row2Tot.text = String.format("%.2f", totalTimes[1])
 
-        binding.row3Start.text = startTimes[2].toString()
-        binding.row3End.text = endTimes[2].toString()
-        binding.row3Tot.text = totalTimes[2].toString()
+        binding.row3Start.text = String.format("%.2f", startTimes[2])
+        binding.row3End.text = String.format("%.2f", endTimes[2])
+        binding.row3Tot.text = String.format("%.2f", totalTimes[2])
 
-        binding.row4Start.text = startTimes[3].toString()
-        binding.row4End.text = endTimes[3].toString()
-        binding.row4Tot.text = totalTimes[3].toString()
+        binding.row4Start.text = String.format("%.2f", startTimes[3])
+        binding.row4End.text = String.format("%.2f", endTimes[3])
+        binding.row4Tot.text = String.format("%.2f", totalTimes[3])
 
-        binding.row5Start.text = startTimes[4].toString()
-        binding.row5End.text = endTimes[4].toString()
-        binding.row5Tot.text = totalTimes[4].toString()
+        binding.row5Start.text = String.format("%.2f", startTimes[4])
+        binding.row5End.text = String.format("%.2f", endTimes[4])
+        binding.row5Tot.text = String.format("%.2f", totalTimes[4])
     }
 
 

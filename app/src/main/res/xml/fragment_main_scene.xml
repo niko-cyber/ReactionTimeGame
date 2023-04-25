@@ -6,14 +6,14 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="250">
+        motion:duration="500">
         <KeyFrameSet>
             <KeyAttribute
                 motion:motionTarget="@+id/animationButton"
                 motion:framePosition="50"
                 android:scaleX="3"
                 android:scaleY="3"
-                android:rotationX="360"
+                android:rotationX="75"
                 android:rotationY="360"
                 android:rotation="360" />
             <KeyPosition

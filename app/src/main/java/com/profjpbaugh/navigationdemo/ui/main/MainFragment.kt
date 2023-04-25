@@ -66,32 +66,24 @@ class MainFragment : Fragment() {
                     2 -> {
                         time -= initialTime
                         ends.add(time.toFloat() / 1000F)
+                        starts.add(ends[0])
                     }
                     3 -> {
-                        starts.add(ends[0])
+                        time -= initialTime
+                        ends.add(time.toFloat() / 1000F)
+                        starts.add(ends[1])
                     }
                     4 -> {
                         time -= initialTime
                         ends.add(time.toFloat() / 1000F)
-                    }
-                    5 -> {
-                        starts.add(ends[1])
-                    }
-                    6 -> {
-                        time -= initialTime
-                        ends.add(time.toFloat() / 1000F)
-                    }
-                    7 -> {
                         starts.add(ends[2])
                     }
-                    8 -> {
+                    5 -> {
                         time -= initialTime
                         ends.add(time.toFloat() / 1000F)
-                    }
-                    9 -> {
                         starts.add(ends[3])
                     }
-                    10 -> {
+                    6 -> {
                         time -= initialTime
                         ends.add(time.toFloat() / 1000F)
                         phase = 1
@@ -108,7 +100,6 @@ class MainFragment : Fragment() {
                         //action.to(MainFragmentDirections.mainToSecond())
 
                         Navigation.findNavController(binding.motionLayout).navigate(action)
-
                     }
                 }
 
